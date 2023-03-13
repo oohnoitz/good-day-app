@@ -50,7 +50,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     {:noreply, stream_delete(socket, :reflections, reflection)}
   end
 
-  def reflection_icon_workday(icon) do
+  def icon_workday(icon) do
     case icon do
       :terrible -> "😭"
       :bad -> "☹️"
@@ -60,7 +60,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     end
   end
 
-  def reflection_icon_feeling(icon) do
+  def icon_feeling(icon) do
     case icon do
       :tense -> "😧"
       :stress -> "😟"
@@ -73,7 +73,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     end
   end
 
-  def reflection_heat_blue(shade) do
+  def heatmap_blue(shade) do
     case shade do
       :none -> "bg-gray-100"
       :little -> "bg-blue-100"
@@ -83,7 +83,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     end
   end
 
-  def reflection_heat_pink(shade) do
+  def heatmap_pink(shade) do
     case shade do
       :none -> "bg-gray-100"
       :one -> "bg-red-100"
@@ -93,9 +93,9 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     end
   end
 
-  def reflection_heat_most_productive(true), do: "bg-blue-400"
-  def reflection_heat_most_productive(false), do: "bg-white"
+  def heatmap_most(true), do: "bg-blue-400"
+  def heatmap_most(false), do: "bg-white"
 
-  def reflection_heat_least_productive(true), do: "bg-red-400"
-  def reflection_heat_least_productive(false), do: "bg-white"
+  def heatmap_least(true), do: "bg-red-400"
+  def heatmap_least(false), do: "bg-white"
 end

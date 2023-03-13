@@ -9,64 +9,44 @@
 
 <h2 class="mt-11 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
 
-<div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-  <table class="mt-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-500">
-      <tr class="flex flex-col pr-2">
-        <th class="p-0 pb-4 font-normal text-right">&nbsp;</th>
-        <th class="p-0 pb-4 font-normal text-right">How was your workday?</th>
-        <th class="p-0 pb-4 font-normal text-right">How do you feel about your workday?</th>
-        <th class="p-0 pb-4 font-normal text-right">I worked with other people</th>
-        <th class="p-0 pb-4 font-normal text-right">I helped other people</th>
-        <th class="p-0 pb-4 font-normal text-right">My work was interrupted</th>
-        <th class="p-0 pb-4 font-normal text-right">I made progress towards my goals</th>
-        <th class="p-0 pb-4 font-normal text-right">I did high-quality work</th>
-        <th class="p-0 pb-4 font-normal text-right">I did a lot of work</th>
-        <th class="p-0 pb-4 font-normal text-right">I took breaks today</th>
-        <th class="p-0 pb-4 font-normal text-right">How many meetings did you have today?</th>
+<div class="overflow-x-auto px-4 sm:overflow-visible sm:px-0">
+  <table class="py-4 w-[40rem] sm:w-full flex">
+    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-500">
+      <tr class="flex flex-col pr-2 gap-1">
+        <th class="h-8 font-normal text-right">&nbsp;</th>
+        <th class="h-8 font-normal text-right">How was your workday?</th>
+        <th class="h-8 font-normal text-right">How do you feel about your workday?</th>
+        <th class="h-8 font-normal text-right">I worked with other people</th>
+        <th class="h-8 font-normal text-right">I helped other people</th>
+        <th class="h-8 font-normal text-right">My work was interrupted</th>
+        <th class="h-8 font-normal text-right">I made progress towards my goals</th>
+        <th class="h-8 font-normal text-right">I did high-quality work</th>
+        <th class="h-8 font-normal text-right">I did a lot of work</th>
+        <th class="h-8 font-normal text-right">I took breaks today</th>
+        <th class="h-8 font-normal text-right">How many meetings did you have today?</th>
       </tr>
     </thead>
-    <tbody id="reflections-graph-1" phx-update="stream" class="flex">
+    <tbody id="reflections-chart-1" phx-update="stream" class="flex gap-1">
       <tr
         :for={{row_id, row} <- @streams.reflections}
-        id={"#{row_id}-graph-1"}
-        class="pl-2 flex flex-col"
+        id={"#{row_id}-chart-1"}
+        class="flex flex-col gap-1"
       >
-        <td class="p-0 pb-4 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
-        <td class="p-0 pb-4">
-          <div class="h-6 w-12 text-center">
-            <%= reflection_icon_workday(row.workday_quality) %>
-          </div>
+        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="h-8 w-16 text-center text-xl">
+          <%= icon_workday(row.workday_quality) %>
         </td>
-        <td class="p-0 pb-4">
-          <div class="h-6 w-12 text-center">
-            <%= reflection_icon_feeling(row.workday_feeling) %>
-          </div>
+        <td class="h-8 w-16 text-center text-xl">
+          <%= icon_feeling(row.workday_feeling) %>
         </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.work_other_people_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.help_other_people_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.interrupted_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.made_progress_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.made_quality_work_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.made_work_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_blue(row.breaks_amount)]}></div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={["h-6 w-12", reflection_heat_pink(row.meeting_amount)]}></div>
-        </td>
+        <td class={["h-8 w-16", heatmap_blue(row.work_other_people_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.help_other_people_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.interrupted_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.made_progress_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.made_quality_work_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.made_work_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_blue(row.breaks_amount)]}></td>
+        <td class={["h-8 w-16", heatmap_pink(row.meeting_amount)]}></td>
       </tr>
     </tbody>
   </table>
@@ -77,23 +57,23 @@
     <h3 class="mt-2 font-semibold">Amount of day</h3>
     <ul>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_blue(:none)]}></div>
+        <div class={["h-2 w-2", heatmap_blue(:none)]}></div>
         None of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_blue(:little)]}></div>
+        <div class={["h-2 w-2", heatmap_blue(:little)]}></div>
         A little of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_blue(:some)]}></div>
+        <div class={["h-2 w-2", heatmap_blue(:some)]}></div>
         Some of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_blue(:much)]}></div>
+        <div class={["h-2 w-2", heatmap_blue(:much)]}></div>
         Much of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_blue(:most)]}></div>
+        <div class={["h-2 w-2", heatmap_blue(:most)]}></div>
         Most or all of the day
       </li>
     </ul>
@@ -103,162 +83,90 @@
     <h3 class="mt-2 font-semibold">Meetings</h3>
     <ul>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_pink(:none)]}></div>
+        <div class={["h-2 w-2", heatmap_pink(:none)]}></div>
         None of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_pink(:one)]}></div>
+        <div class={["h-2 w-2", heatmap_pink(:one)]}></div>
         A little of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_pink(:two)]}></div>
+        <div class={["h-2 w-2", heatmap_pink(:two)]}></div>
         Some of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_pink(:few)]}></div>
+        <div class={["h-2 w-2", heatmap_pink(:few)]}></div>
         Much of the day
       </li>
       <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", reflection_heat_pink(:many)]}></div>
+        <div class={["h-2 w-2", heatmap_pink(:many)]}></div>
         Most or all of the day
       </li>
     </ul>
   </div>
 </div>
 
-<h2 class="mt-11 text-xl font-semibold">What time of the day are you most productive?</h2>
+<h2 class="mt-6 text-xl font-semibold">What time of the day are you most productive?</h2>
 
 <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-  <table class="mt-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-500">
-      <tr class="flex flex-col pr-2">
-        <th class="p-0 pb-4 font-normal text-right">&nbsp;</th>
-        <th class="p-0 pb-4 font-normal text-right">In the morning (9:00-11:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Mid-day (11:00-13:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Early afternoon (13:00-15:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Late afternoon (15:00-17:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Outside of typical work hours</th>
-        <th class="p-0 pb-4 font-normal text-right">Equally throughout the day</th>
+  <table class="py-4 w-[40rem] sm:w-full flex">
+    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-500">
+      <tr class="flex flex-col pr-2 gap-1">
+        <th class="h-8 font-normal text-right">&nbsp;</th>
+        <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>
+        <th class="h-8 font-normal text-right">Mid-day (11:00-13:00)</th>
+        <th class="h-8 font-normal text-right">Early afternoon (13:00-15:00)</th>
+        <th class="h-8 font-normal text-right">Late afternoon (15:00-17:00)</th>
+        <th class="h-8 font-normal text-right">Outside of typical work hours</th>
+        <th class="h-8 font-normal text-right">Equally throughout the day</th>
       </tr>
     </thead>
-    <tbody id="reflections-graph-2" phx-update="stream" class="flex">
+    <tbody id="reflections-chart-2" phx-update="stream" class="flex gap-1">
       <tr
-        :for={{row_id, row} <- @streams.reflections}
-        id={"#{row_id}-graph-2"}
-        class="pl-2 flex flex-col"
+        :for={{row_id, %{most_productive_time: time} = row} <- @streams.reflections}
+        id={"#{row_id}-chart-2"}
+        class="flex flex-col gap-1"
       >
-        <td class="p-0 pb-4 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :morning)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :midday)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :earlyafternoon)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :lateafternoon)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :nonwork)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_most_productive(row.most_productive_time == :equally)
-          ]}>
-          </div>
-        </td>
+        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class={["h-8 w-16", heatmap_most(time == :morning)]}></td>
+        <td class={["h-8 w-16", heatmap_most(time == :midday)]}></td>
+        <td class={["h-8 w-16", heatmap_most(time == :earlyafternoon)]}></td>
+        <td class={["h-8 w-16", heatmap_most(time == :lateafternoon)]}></td>
+        <td class={["h-8 w-16", heatmap_most(time == :nonwork)]}></td>
+        <td class={["h-8 w-16", heatmap_most(time == :equally)]}></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<h2 class="mt-11 text-xl font-semibold">What time of the day are you least productive?</h2>
+<h2 class="mt-6 text-xl font-semibold">What time of the day are you least productive?</h2>
 
 <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-  <table class="mt-4 w-[40rem] sm:w-full flex">
+  <table class="py-4 w-[40rem] sm:w-full flex">
     <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-500">
-      <tr class="flex flex-col pr-2">
-        <th class="p-0 pb-4 font-normal text-right">&nbsp;</th>
-        <th class="p-0 pb-4 font-normal text-right">In the morning (9:00-11:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Mid-day (11:00-13:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Early afternoon (13:00-15:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Late afternoon (15:00-17:00)</th>
-        <th class="p-0 pb-4 font-normal text-right">Outside of typical work hours</th>
-        <th class="p-0 pb-4 font-normal text-right">Equally throughout the day</th>
+      <tr class="flex flex-col pr-2 gap-1">
+        <th class="h-8 font-normal text-right">&nbsp;</th>
+        <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>
+        <th class="h-8 font-normal text-right">Mid-day (11:00-13:00)</th>
+        <th class="h-8 font-normal text-right">Early afternoon (13:00-15:00)</th>
+        <th class="h-8 font-normal text-right">Late afternoon (15:00-17:00)</th>
+        <th class="h-8 font-normal text-right">Outside of typical work hours</th>
+        <th class="h-8 font-normal text-right">Equally throughout the day</th>
       </tr>
     </thead>
-    <tbody id="reflections-graph-3" phx-update="stream" class="flex">
+    <tbody id="reflections-graph-3" phx-update="stream" class="flex gap-1">
       <tr
-        :for={{row_id, row} <- @streams.reflections}
+        :for={{row_id, %{least_productive_time: time} = row} <- @streams.reflections}
         id={"#{row_id}-graph-3"}
-        class="pl-2 flex flex-col"
+        class="flex flex-col gap-1"
       >
-        <td class="p-0 pb-4 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :morning)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :midday)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :earlyafternoon)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :lateafternoon)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :nonwork)
-          ]}>
-          </div>
-        </td>
-        <td class="p-0 pb-4">
-          <div class={[
-            "h-6 w-12",
-            reflection_heat_least_productive(row.least_productive_time == :equally)
-          ]}>
-          </div>
-        </td>
+        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class={["h-8 w-16", heatmap_least(time == :morning)]}></td>
+        <td class={["h-8 w-16", heatmap_least(time == :midday)]}></td>
+        <td class={["h-8 w-16", heatmap_least(time == :earlyafternoon)]}></td>
+        <td class={["h-8 w-16", heatmap_least(time == :lateafternoon)]}></td>
+        <td class={["h-8 w-16", heatmap_least(time == :nonwork)]}></td>
+        <td class={["h-8 w-16", heatmap_least(time == :equally)]}></td>
       </tr>
     </tbody>
   </table>
