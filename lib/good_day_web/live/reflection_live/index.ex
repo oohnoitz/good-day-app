@@ -75,7 +75,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   def reflection_heat_blue(shade) do
     case shade do
-      :none -> "bg-white"
+      :none -> "bg-gray-100"
       :little -> "bg-blue-100"
       :some -> "bg-blue-300"
       :much -> "bg-blue-400"
@@ -85,7 +85,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   def reflection_heat_pink(shade) do
     case shade do
-      :none -> "bg-white"
+      :none -> "bg-gray-100"
       :one -> "bg-red-100"
       :two -> "bg-red-300"
       :few -> "bg-red-400"
