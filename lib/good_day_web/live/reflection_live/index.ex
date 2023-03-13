@@ -6,7 +6,10 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :reflections, Accounts.list_reflections())}
+    {:ok,
+     stream(socket, :reflections, Accounts.current_week_of_reflections(),
+       dom_id: &"reflections-#{&1.date}"
+     )}
   end
 
   @impl true
@@ -30,7 +33,7 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Reflections")
+    |> assign(:page_title, "Reflections")
     |> assign(:reflection, nil)
   end
 
@@ -45,5 +48,48 @@ defmodule GoodDayWeb.ReflectionLive.Index do
     {:ok, _} = Accounts.delete_reflection(reflection)
 
     {:noreply, stream_delete(socket, :reflections, reflection)}
+  end
+
+  def reflection_icon_workday(icon) do
+    case icon do
+      :terrible -> "😭"
+      :bad -> "☹️"
+      :ok -> "😐"
+      :good -> "☺️"
+      :awesome -> "🥰"
+    end
+  end
+
+  def reflection_icon_feeling(icon) do
+    case icon do
+      :tense -> "😧"
+      :stress -> "😟"
+      :sad -> "😢"
+      :bored -> "🥱"
+      :calm -> "😐"
+      :serene -> "😌"
+      :happy -> "☺️"
+      :excited -> "😀"
+    end
+  end
+
+  def reflection_heat_blue(shade) do
+    case shade do
+      :none -> "bg-white"
+      :little -> "bg-blue-100"
+      :some -> "bg-blue-300"
+      :much -> "bg-blue-400"
+      :most -> "bg-blue-600"
+    end
+  end
+
+  def reflection_heat_pink(shade) do
+    case shade do
+      :none -> "bg-white"
+      :one -> "bg-red-100"
+      :two -> "bg-red-300"
+      :few -> "bg-red-400"
+      :many -> "bg-red-600"
+    end
   end
 end

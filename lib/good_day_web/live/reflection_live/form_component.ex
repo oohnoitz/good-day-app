@@ -19,6 +19,7 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:date]} type="date" label="Date" />
         <.input
           field={@form[:workday_quality]}
           type="select"

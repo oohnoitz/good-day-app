@@ -54,7 +54,13 @@ defmodule GoodDay.Accounts.Reflection do
       :most_productive_time,
       :least_productive_time
     ])
-    |> put_change(:date, Date.utc_today())
+    |> then(fn changeset ->
+      if is_nil(get_field(changeset, :date)) do
+        put_change(changeset, :date, Date.utc_today())
+      else
+        changeset
+      end
+    end)
     |> validate_required([
       :date,
       :workday_quality,
