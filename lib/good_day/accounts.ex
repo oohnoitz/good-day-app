@@ -21,7 +21,7 @@ defmodule GoodDay.Accounts do
     Repo.all(Reflection)
   end
 
-  def current_week_of_reflections do
+  def current_week_of_reflections_for_user(user_id) do
     date = Timex.today()
     date_start = Timex.beginning_of_week(date)
     date_end = Timex.end_of_week(date)
@@ -29,6 +29,7 @@ defmodule GoodDay.Accounts do
     Repo.all(
       from(r in Reflection,
         where: r.date >= ^date_start and r.date <= ^date_end,
+        where: r.user_id == ^user_id,
         order_by: [asc: r.date]
       )
     )

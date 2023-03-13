@@ -7,7 +7,10 @@ defmodule GoodDayWeb.ReflectionLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
-     stream(socket, :reflections, Accounts.current_week_of_reflections(),
+     stream(
+       socket,
+       :reflections,
+       Accounts.current_week_of_reflections_for_user(socket.assigns.current_user.id),
        dom_id: &"reflections-#{&1.date}"
      )}
   end

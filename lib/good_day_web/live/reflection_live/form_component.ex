@@ -211,6 +211,7 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
   end
 
   def handle_event("save", %{"reflection" => reflection_params}, socket) do
+    reflection_params = Map.put(reflection_params, "user_id", socket.assigns.current_user_id)
     save_reflection(socket, socket.assigns.action, reflection_params)
   end
 
@@ -240,7 +241,6 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         {:noreply, assign_form(socket, changeset)}
     end
   end

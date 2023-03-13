@@ -2,7 +2,11 @@ defmodule GoodDay.Accounts.Reflection do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias GoodDay.Accounts.User
+
   schema "reflections" do
+    belongs_to(:user, User)
+
     field :date, :date
     field :workday_quality, Ecto.Enum, values: [terrible: 0, bad: 1, ok: 2, good: 3, awesome: 4]
 
@@ -41,6 +45,7 @@ defmodule GoodDay.Accounts.Reflection do
   def changeset(reflection, attrs) do
     reflection
     |> cast(attrs, [
+      :user_id,
       :date,
       :workday_quality,
       :work_other_people_amount,
@@ -63,6 +68,7 @@ defmodule GoodDay.Accounts.Reflection do
       end
     end)
     |> validate_required([
+      :user_id,
       :date,
       :workday_quality,
       :work_other_people_amount,
