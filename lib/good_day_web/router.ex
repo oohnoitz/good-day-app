@@ -19,10 +19,7 @@ defmodule GoodDayWeb.Router do
 
     live "/", ReflectionLive.Index, :index
     live "/new", ReflectionLive.Index, :new
-    live "/:id/edit", ReflectionLive.Index, :edit
-
-    live "/:id", ReflectionLive.Show, :show
-    live "/:id/show/edit", ReflectionLive.Show, :edit
+    live "/r/:id/edit", ReflectionLive.Index, :edit
   end
 
   # Other scopes may use custom stacks.

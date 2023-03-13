@@ -32,7 +32,11 @@
         id={"#{row_id}-chart-1"}
         class="flex flex-col gap-1"
       >
-        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="h-8 text-center">
+          <.link navigate={~p"/r/#{row}/edit"}>
+            <%= Timex.format!(row.date, "{WDshort}") %>
+          </.link>
+        </td>
         <td class="h-8 w-16 text-center text-xl">
           <%= icon_workday(row.workday_quality) %>
         </td>
@@ -171,28 +175,6 @@
     </tbody>
   </table>
 </div>
-
-<.table
-  id="reflections"
-  rows={@streams.reflections}
-  row_click={fn {_id, reflection} -> JS.navigate(~p"/#{reflection}") end}
->
-  <:col :let={{_id, reflection}} label="Date"><%= reflection.date %></:col>
-  <:action :let={{_id, reflection}}>
-    <div class="sr-only">
-      <.link navigate={~p"/#{reflection}"}>Show</.link>
-    </div>
-    <.link patch={~p"/#{reflection}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, reflection}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: reflection.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
 
 <.modal
   :if={@live_action in [:new, :edit]}
