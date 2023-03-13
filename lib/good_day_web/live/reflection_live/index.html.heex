@@ -176,6 +176,25 @@
   </table>
 </div>
 
+<.table
+  id="reflections"
+  rows={@streams.reflections}
+  row_click={fn {_id, reflection} -> JS.navigate(~p"/r/#{reflection}/edit") end}
+>
+  <:col :let={{_id, reflection}} label="Date"><%= reflection.date %></:col>
+  <:action :let={{_id, reflection}}>
+    <.link patch={~p"/r/#{reflection}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, reflection}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: reflection.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
 <.modal
   :if={@live_action in [:new, :edit]}
   id="reflection-modal"
