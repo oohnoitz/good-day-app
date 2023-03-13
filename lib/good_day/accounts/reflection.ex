@@ -41,6 +41,7 @@ defmodule GoodDay.Accounts.Reflection do
   def changeset(reflection, attrs) do
     reflection
     |> cast(attrs, [
+      :date,
       :workday_quality,
       :work_other_people_amount,
       :help_other_people_amount,

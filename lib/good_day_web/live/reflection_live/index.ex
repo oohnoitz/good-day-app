@@ -92,4 +92,10 @@ defmodule GoodDayWeb.ReflectionLive.Index do
       :many -> "bg-red-600"
     end
   end
+
+  def reflection_heat_most_productive(true), do: "bg-blue-400"
+  def reflection_heat_most_productive(false), do: "bg-white"
+
+  def reflection_heat_least_productive(true), do: "bg-red-400"
+  def reflection_heat_least_productive(false), do: "bg-white"
 end

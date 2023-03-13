@@ -87,6 +87,126 @@
         <th class="p-0 pb-4 font-normal text-right">Equally throughout the day</th>
       </tr>
     </thead>
+    <tbody id="reflections-graph-2" phx-update="stream" class="flex">
+      <tr
+        :for={{row_id, row} <- @streams.reflections}
+        id={"#{row_id}-graph-2"}
+        class="pl-2 flex flex-col"
+      >
+        <td class="p-0 pb-4 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :morning)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :midday)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :earlyafternoon)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :equally)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :nonwork)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_most_productive(row.most_productive_time == :equally)
+          ]}>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-11 text-xl font-semibold">What time of the day are you least productive?</h2>
+
+<div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
+  <table class="mt-4 w-[40rem] sm:w-full flex">
+    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-500">
+      <tr class="flex flex-col pr-2">
+        <th class="p-0 pb-4 font-normal text-right">&nbsp;</th>
+        <th class="p-0 pb-4 font-normal text-right">In the morning (9:00-11:00)</th>
+        <th class="p-0 pb-4 font-normal text-right">Mid-day (11:00-13:00)</th>
+        <th class="p-0 pb-4 font-normal text-right">Early afternoon (13:00-15:00)</th>
+        <th class="p-0 pb-4 font-normal text-right">Late afternoon (15:00-17:00)</th>
+        <th class="p-0 pb-4 font-normal text-right">Outside of typical work hours</th>
+        <th class="p-0 pb-4 font-normal text-right">Equally throughout the day</th>
+      </tr>
+    </thead>
+    <tbody id="reflections-graph-3" phx-update="stream" class="flex">
+      <tr
+        :for={{row_id, row} <- @streams.reflections}
+        id={"#{row_id}-graph-3"}
+        class="pl-2 flex flex-col"
+      >
+        <td class="p-0 pb-4 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :morning)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :midday)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :earlyafternoon)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :equally)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :nonwork)
+          ]}>
+          </div>
+        </td>
+        <td class="p-0 pb-4">
+          <div class={[
+            "h-6 w-12",
+            reflection_heat_least_productive(row.least_productive_time == :equally)
+          ]}>
+          </div>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
 
