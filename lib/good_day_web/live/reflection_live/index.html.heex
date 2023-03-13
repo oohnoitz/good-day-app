@@ -1,0 +1,46 @@
+<.header>
+  Listing Reflections
+  <:actions>
+    <.link patch={~p"/new"}>
+      <.button>New Reflection</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="reflections"
+  rows={@streams.reflections}
+  row_click={fn {_id, reflection} -> JS.navigate(~p"/#{reflection}") end}
+>
+  <:col :let={{_id, reflection}} label="Date"><%= reflection.date %></:col>
+  <:action :let={{_id, reflection}}>
+    <div class="sr-only">
+      <.link navigate={~p"/#{reflection}"}>Show</.link>
+    </div>
+    <.link patch={~p"/#{reflection}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, reflection}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: reflection.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="reflection-modal"
+  show
+  on_cancel={JS.navigate(~p"/")}
+>
+  <.live_component
+    module={GoodDayWeb.ReflectionLive.FormComponent}
+    id={@reflection.id || :new}
+    title={@page_title}
+    action={@live_action}
+    reflection={@reflection}
+    patch={~p"/"}
+  />
+</.modal>

@@ -1,0 +1,31 @@
+<.header>
+  Reflection <%= @reflection.id %>
+  <:subtitle>This is a reflection record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/#{@reflection}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit reflection</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Date"><%= @reflection.date %></:item>
+</.list>
+
+<.back navigate={~p"/"}>Back to reflections</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="reflection-modal"
+  show
+  on_cancel={JS.patch(~p"/#{@reflection}")}
+>
+  <.live_component
+    module={GoodDayWeb.ReflectionLive.FormComponent}
+    id={@reflection.id}
+    title={@page_title}
+    action={@live_action}
+    reflection={@reflection}
+    patch={~p"/#{@reflection}"}
+  />
+</.modal>
