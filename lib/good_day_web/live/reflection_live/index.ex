@@ -24,10 +24,8 @@ defmodule GoodDayWeb.ReflectionLive.Index do
   end
 
   defp apply_action(socket, :new, _params) do
-    date = Date.utc_today()
-
     socket
-    |> assign(:page_title, "Reflection for #{date}")
+    |> assign(:page_title, "New Reflection")
     |> assign(:reflection, %Reflection{})
   end
 
