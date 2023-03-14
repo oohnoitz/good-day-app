@@ -88,4 +88,7 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/good_day ./
 
 USER nobody
 
+ENV ECTO_IPV6 true
+ENV ERL_AFLAGS "-proto_dist inet6_tcp"
+
 CMD ["/app/bin/server"]
