@@ -27,10 +27,10 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
           options={[
             [key: "", value: ""],
             [key: "😭 Terrible", value: :terrible],
-            [key: "☹️  Bad", value: :bad],
+            [key: "🙁 Bad", value: :bad],
             [key: "😐 OK", value: :ok],
-            [key: "☺️ Good", value: :good],
-            [key: "🥰 Awesome", value: :awesome]
+            [key: "🙂 Good", value: :good],
+            [key: "😍 Awesome", value: :awesome]
           ]}
         />
         <.input
@@ -143,13 +143,13 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
           label="💭 How do you feel about your workday?"
           options={[
             [key: "", value: ""],
-            [key: "😧 Tense or nervous", value: :tense],
+            [key: "😬 Tense or nervous", value: :tense],
             [key: "😟 Stressed or upset", value: :stress],
             [key: "😢 Sad or depressed", value: :sad],
             [key: "🥱 Bored", value: :bored],
-            [key: "😐 Calm or relaxed", value: :calm],
+            [key: "☺️ Calm or relaxed", value: :calm],
             [key: "😌 Serene or content", value: :serene],
-            [key: "☺️ Happy or elated", value: :happy],
+            [key: "🙂 Happy or elated", value: :happy],
             [key: "😀 Excited or alert", value: :excited]
           ]}
         />

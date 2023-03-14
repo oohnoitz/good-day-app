@@ -60,22 +60,22 @@ defmodule GoodDayWeb.ReflectionLive.Index do
   def icon_workday(icon) do
     case icon do
       :terrible -> "😭"
-      :bad -> "☹️"
+      :bad -> "🙁"
       :ok -> "😐"
-      :good -> "☺️"
-      :awesome -> "🥰"
+      :good -> "🙂"
+      :awesome -> "😍"
     end
   end
 
   def icon_feeling(icon) do
     case icon do
-      :tense -> "😧"
+      :tense -> "😬"
       :stress -> "😟"
       :sad -> "😢"
       :bored -> "🥱"
-      :calm -> "😐"
+      :calm -> "☺️"
       :serene -> "😌"
-      :happy -> "☺️"
+      :happy -> "🙂"
       :excited -> "😀"
     end
   end
