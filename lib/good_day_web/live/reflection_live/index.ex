@@ -105,4 +105,51 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   def heatmap_least(true), do: "bg-red-500"
   def heatmap_least(false), do: "bg-slate-50"
+
+  def summary_good(reflections) do
+    Enum.reduce(reflections, 0, fn {_id, reflection}, acc ->
+      if reflection.workday_quality in [:good, :awesome] do
+        acc + 1
+      else
+        acc
+      end
+    end)
+  end
+
+  def summary_good_percentage(reflections) do
+    round(summary_good(reflections) / Enum.count(reflections) * 100)
+  end
+
+  def summary_okay(reflections) do
+    Enum.reduce(reflections, 0, fn {_id, reflection}, acc ->
+      if reflection.workday_quality in [:good, :awesome] do
+        acc
+      else
+        acc + 1
+      end
+    end)
+  end
+
+  def summary_okay_percentage(reflections) do
+    round(summary_okay(reflections) / Enum.count(reflections) * 100)
+  end
+
+  def summary_average(reflections) do
+    mapping = [terrible: 0, bad: 1, ok: 2, good: 3, awesome: 4]
+
+    average =
+      round(
+        Enum.reduce(reflections, 0, fn {_id, reflection}, acc ->
+          acc + Keyword.get(mapping, reflection.workday_quality, 0)
+        end) / Enum.count(reflections)
+      )
+
+    case average do
+      0 -> icon_workday(:terrible) <> " Terrible"
+      1 -> icon_workday(:bad) <> " Bad"
+      2 -> icon_workday(:ok) <> " OK"
+      3 -> icon_workday(:good) <> " Good"
+      4 -> icon_workday(:awesome) <> " Awesome"
+    end
+  end
 end

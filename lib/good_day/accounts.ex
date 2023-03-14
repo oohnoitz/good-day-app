@@ -23,7 +23,7 @@ defmodule GoodDay.Accounts do
 
   def current_week_of_reflections_for_user(user_id) do
     date = Timex.today()
-    date_start = Timex.beginning_of_week(date)
+    date_start = Timex.beginning_of_week(date, :sun)
     date_end = Timex.end_of_week(date)
 
     Repo.all(

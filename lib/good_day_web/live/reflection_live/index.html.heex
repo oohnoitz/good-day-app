@@ -7,7 +7,37 @@
   </:actions>
 </.header>
 
-<h2 class="mt-12 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
+<h2 class="mt-12 text-xl font-semibold">
+  Summary for Week of <%= Timex.today()
+  |> Timex.beginning_of_week(:sun)
+  |> Timex.format!("{Mfull} {D}, {YYYY}") %>
+</h2>
+<p class="mt-2 text-sm text-zinc-500">
+  You logged <%= Enum.count(@streams.reflections) %> days this week.
+  <%= if Enum.count(@streams.reflections) > 3 do %>
+    Great job!
+  <% end %>
+</p>
+
+<div :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
+  <p>
+    ☀️ <strong><%= summary_good(@streams.reflections) %></strong>
+    were Good days (<%= summary_good_percentage(@streams.reflections) %>%).
+  </p>
+  <em>These are days you rated as Awesome or Good</em>
+</div>
+<div :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
+  <p>
+    🌧 <strong><%= summary_okay(@streams.reflections) %></strong>
+    were Not-so-good days (<%= summary_okay_percentage(@streams.reflections) %>%).
+  </p>
+  <em>These are days you rated as OK, Bad, or Terrible</em>
+</div>
+<p :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
+  On average, your workdays were <%= summary_average(@streams.reflections) %>.
+</p>
+
+<h2 class="mt-6 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
 <p class="mt-2 text-sm text-zinc-500">
   First, let's look at how you responded to each question over the week.
 </p>
