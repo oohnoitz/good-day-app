@@ -216,17 +216,26 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
   end
 
   defp save_reflection(socket, :edit, reflection_params) do
-    case Accounts.update_reflection(socket.assigns.reflection, reflection_params) do
-      {:ok, reflection} ->
-        notify_parent({:saved, reflection})
+    current_user_id = socket.assigns.current_user_id
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Reflection updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
+    with %{user_id: ^current_user_id} <- socket.assigns.reflection,
+         {:ok, reflection} <-
+           Accounts.update_reflection(socket.assigns.reflection, reflection_params) do
+      notify_parent({:saved, reflection})
 
+      {:noreply,
+       socket
+       |> put_flash(:info, "Reflection updated successfully")
+       |> push_patch(to: socket.assigns.patch)}
+    else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
+
+      _error ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "You do not have permission to update this reflection.")
+         |> push_patch(to: socket.assigns.patch)}
     end
   end
 

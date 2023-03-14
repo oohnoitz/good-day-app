@@ -45,10 +45,16 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
+    current_user_id = socket.assigns.current_user.id
     reflection = Accounts.get_reflection!(id)
-    {:ok, _} = Accounts.delete_reflection(reflection)
 
-    {:noreply, stream_delete(socket, :reflections, reflection)}
+    with %{user_id: ^current_user_id} <- reflection,
+         {:ok, _} <- Accounts.delete_reflection(reflection) do
+      {:noreply, stream_delete(socket, :reflections, reflection)}
+    else
+      _error ->
+        {:noreply, socket}
+    end
   end
 
   def icon_workday(icon) do
