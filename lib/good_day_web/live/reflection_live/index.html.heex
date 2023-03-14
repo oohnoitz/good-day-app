@@ -7,11 +7,19 @@
   </:actions>
 </.header>
 
-<h2 class="mt-11 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
+<h2 class="mt-12 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
+<p class="mt-2 text-sm text-zinc-500">
+  First, let's look at how you responded to each question over the week.
+</p>
+<p class="mt-2 text-sm text-zinc-500">
+  Is there any relationship to how you answered the first
+  <em class="font-semibold">How was your workday</em>
+  question? We show how you reported the quality of your workday and how you felt about it at the top - see if there are any patterns on the Good days that you can control.
+</p>
 
-<div class="overflow-x-auto px-4 sm:overflow-visible sm:px-0">
+<div class="mt-2 overflow-x-auto px-4 sm:overflow-visible bg-slate-50">
   <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-500">
+    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-700">
       <tr class="flex flex-col pr-2 gap-1">
         <th class="h-8 font-normal text-right">&nbsp;</th>
         <th class="h-8 font-normal text-right">How was your workday?</th>
@@ -56,65 +64,67 @@
   </table>
 </div>
 
-<div class="flex gap-4 text-zinc-500">
-  <div>
-    <h3 class="mt-2 font-semibold">Amount of day</h3>
-    <ul>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_blue(:none)]}></div>
-        None of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_blue(:little)]}></div>
-        A little of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_blue(:some)]}></div>
-        Some of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_blue(:much)]}></div>
-        Much of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_blue(:most)]}></div>
-        Most or all of the day
-      </li>
-    </ul>
-  </div>
+<div class="p-4 text-zinc-500 bg-slate-50">
+  <div class="flex gap-4">
+    <div>
+      <h3 class="font-semibold">Amount of day</h3>
+      <ul class="mt-1">
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_blue(:none)]}></div>
+          None of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_blue(:little)]}></div>
+          A little of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_blue(:some)]}></div>
+          Some of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_blue(:much)]}></div>
+          Much of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_blue(:most)]}></div>
+          Most or all of the day
+        </li>
+      </ul>
+    </div>
 
-  <div>
-    <h3 class="mt-2 font-semibold">Meetings</h3>
-    <ul>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_pink(:none)]}></div>
-        None of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_pink(:one)]}></div>
-        A little of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_pink(:two)]}></div>
-        Some of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_pink(:few)]}></div>
-        Much of the day
-      </li>
-      <li class="flex items-center gap-2 text-sm">
-        <div class={["h-2 w-2", heatmap_pink(:many)]}></div>
-        Most or all of the day
-      </li>
-    </ul>
+    <div>
+      <h3 class="font-semibold">Meetings</h3>
+      <ul class="mt-1">
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_pink(:none)]}></div>
+          None of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_pink(:one)]}></div>
+          A little of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_pink(:two)]}></div>
+          Some of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_pink(:few)]}></div>
+          Much of the day
+        </li>
+        <li class="flex items-center gap-2 text-sm">
+          <div class={["h-2 w-2", heatmap_pink(:many)]}></div>
+          Most or all of the day
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <h2 class="mt-6 text-xl font-semibold">What time of the day are you most productive?</h2>
 
-<div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
+<div class="mt-2 overflow-y-auto px-4 sm:overflow-visible bg-slate-50">
   <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-500">
+    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-700">
       <tr class="flex flex-col pr-2 gap-1">
         <th class="h-8 font-normal text-right">&nbsp;</th>
         <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>
@@ -147,9 +157,9 @@
 
 <h2 class="mt-6 text-xl font-semibold">What time of the day are you least productive?</h2>
 
-<div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
+<div class="mt-2 overflow-y-auto px-4 sm:overflow-visible bg-slate-50">
   <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-500">
+    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-700">
       <tr class="flex flex-col pr-2 gap-1">
         <th class="h-8 font-normal text-right">&nbsp;</th>
         <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>

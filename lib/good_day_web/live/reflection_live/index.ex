@@ -82,27 +82,27 @@ defmodule GoodDayWeb.ReflectionLive.Index do
 
   def heatmap_blue(shade) do
     case shade do
-      :none -> "bg-gray-100"
-      :little -> "bg-blue-100"
-      :some -> "bg-blue-300"
-      :much -> "bg-blue-400"
-      :most -> "bg-blue-600"
+      :none -> "bg-blue-100"
+      :little -> "bg-blue-200"
+      :some -> "bg-blue-400"
+      :much -> "bg-blue-500"
+      :most -> "bg-blue-800"
     end
   end
 
   def heatmap_pink(shade) do
     case shade do
-      :none -> "bg-gray-100"
-      :one -> "bg-red-100"
-      :two -> "bg-red-300"
-      :few -> "bg-red-400"
-      :many -> "bg-red-600"
+      :none -> "bg-red-100"
+      :one -> "bg-red-200"
+      :two -> "bg-red-400"
+      :few -> "bg-red-500"
+      :many -> "bg-red-800"
     end
   end
 
-  def heatmap_most(true), do: "bg-blue-400"
-  def heatmap_most(false), do: "bg-white"
+  def heatmap_most(true), do: "bg-blue-500"
+  def heatmap_most(false), do: "bg-slate-50"
 
-  def heatmap_least(true), do: "bg-red-400"
-  def heatmap_least(false), do: "bg-white"
+  def heatmap_least(true), do: "bg-red-500"
+  def heatmap_least(false), do: "bg-slate-50"
 end
