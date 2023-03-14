@@ -32,7 +32,7 @@
         id={"#{row_id}-chart-1"}
         class="flex flex-col gap-1"
       >
-        <td class="h-8 text-center">
+        <td class="h-8 text-center uppercase font-mono tracking-wide">
           <.link navigate={~p"/r/#{row}/edit"}>
             <%= Timex.format!(row.date, "{WDshort}") %>
           </.link>
@@ -131,7 +131,9 @@
         id={"#{row_id}-chart-2"}
         class="flex flex-col gap-1"
       >
-        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="h-8 text-center uppercase font-mono tracking-wide">
+          <%= Timex.format!(row.date, "{WDshort}") %>
+        </td>
         <td class={["h-8 w-16", heatmap_most(time == :morning)]}></td>
         <td class={["h-8 w-16", heatmap_most(time == :midday)]}></td>
         <td class={["h-8 w-16", heatmap_most(time == :earlyafternoon)]}></td>
@@ -164,7 +166,9 @@
         id={"#{row_id}-graph-3"}
         class="flex flex-col gap-1"
       >
-        <td class="h-8 text-center"><%= Timex.format!(row.date, "{WDshort}") %></td>
+        <td class="h-8 text-center uppercase font-mono tracking-wide">
+          <%= Timex.format!(row.date, "{WDshort}") %>
+        </td>
         <td class={["h-8 w-16", heatmap_least(time == :morning)]}></td>
         <td class={["h-8 w-16", heatmap_least(time == :midday)]}></td>
         <td class={["h-8 w-16", heatmap_least(time == :earlyafternoon)]}></td>
