@@ -12,232 +12,53 @@
   |> Timex.beginning_of_week(:sun)
   |> Timex.format!("{Mfull} {D}, {YYYY}") %>
 </h2>
+
 <p class="mt-2 text-sm text-zinc-500">
-  You logged <%= Enum.count(@streams.reflections) %> days this week.
-  <%= if Enum.count(@streams.reflections) > 3 do %>
+  You logged <%= Enum.count(@reflections) %> days this week.
+  <%= if Enum.count(@reflections) > 3 do %>
     Great job!
   <% end %>
 </p>
 
-<div :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
+<div :if={not Enum.empty?(@reflections)} class="mt-2 text-sm text-zinc-500">
   <p>
-    ☀️ <strong><%= summary_good(@streams.reflections) %></strong>
-    were Good days (<%= summary_good_percentage(@streams.reflections) %>%).
+    ☀️ <strong><%= summary_good(@reflections) %></strong>
+    were Good days (<%= summary_good_percentage(@reflections) %>%).
   </p>
   <em>These are days you rated as Awesome or Good</em>
 </div>
-<div :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
+<div :if={not Enum.empty?(@reflections)} class="mt-2 text-sm text-zinc-500">
   <p>
-    🌧 <strong><%= summary_okay(@streams.reflections) %></strong>
-    were Not-so-good days (<%= summary_okay_percentage(@streams.reflections) %>%).
+    🌧 <strong><%= summary_okay(@reflections) %></strong>
+    were Not-so-good days (<%= summary_okay_percentage(@reflections) %>%).
   </p>
   <em>These are days you rated as OK, Bad, or Terrible</em>
 </div>
-<p :if={Enum.count(@streams.reflections) > 0} class="mt-2 text-sm text-zinc-500">
-  On average, your workdays were <%= summary_average(@streams.reflections) %>.
+<p :if={not Enum.empty?(@reflections)} class="mt-2 text-sm text-zinc-500">
+  On average, your workdays were <%= summary_average(@reflections) %>.
 </p>
-
-<h2 class="mt-6 text-xl font-semibold">What did your good and not-so-good days look like?</h2>
-<p class="mt-2 text-sm text-zinc-500">
-  First, let's look at how you responded to each question over the week.
-</p>
-<p class="mt-2 text-sm text-zinc-500">
-  Is there any relationship to how you answered the first
-  <em class="font-semibold">How was your workday</em>
-  question? We show how you reported the quality of your workday and how you felt about it at the top - see if there are any patterns on the Good days that you can control.
-</p>
-
-<div class="mt-2 overflow-x-auto px-4 sm:overflow-visible bg-slate-50">
-  <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-700">
-      <tr class="flex flex-col pr-2 gap-1">
-        <th class="h-8 font-normal text-right">&nbsp;</th>
-        <th class="h-8 font-normal text-right">How was your workday?</th>
-        <th class="h-8 font-normal text-right">How do you feel about your workday?</th>
-        <th class="h-8 font-normal text-right">I worked with other people</th>
-        <th class="h-8 font-normal text-right">I helped other people</th>
-        <th class="h-8 font-normal text-right">My work was interrupted</th>
-        <th class="h-8 font-normal text-right">I made progress towards my goals</th>
-        <th class="h-8 font-normal text-right">I did high-quality work</th>
-        <th class="h-8 font-normal text-right">I did a lot of work</th>
-        <th class="h-8 font-normal text-right">I took breaks today</th>
-        <th class="h-8 font-normal text-right">How many meetings did you have today?</th>
-      </tr>
-    </thead>
-    <tbody id="reflections-chart-1" phx-update="stream" class="flex gap-1">
-      <tr
-        :for={{row_id, row} <- @streams.reflections}
-        id={"#{row_id}-chart-1"}
-        class="flex flex-col gap-1"
-      >
-        <td class="h-8 text-center uppercase font-mono tracking-wide">
-          <.link navigate={~p"/r/#{row}/edit"}>
-            <%= Timex.format!(row.date, "{WDshort}") %>
-          </.link>
-        </td>
-        <td class="h-8 w-16 text-center text-xl">
-          <%= icon_workday(row.workday_quality) %>
-        </td>
-        <td class="h-8 w-16 text-center text-xl">
-          <%= icon_feeling(row.workday_feeling) %>
-        </td>
-        <td class={["h-8 w-16", heatmap_blue(row.work_other_people_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.help_other_people_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.interrupted_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.made_progress_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.made_quality_work_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.made_work_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_blue(row.breaks_amount)]}></td>
-        <td class={["h-8 w-16", heatmap_pink(row.meeting_amount)]}></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="p-4 text-zinc-500 bg-slate-50">
-  <div class="flex gap-4">
-    <div>
-      <h3 class="font-semibold">Amount of day</h3>
-      <ul class="mt-1">
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_blue(:none)]}></div>
-          None of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_blue(:little)]}></div>
-          A little of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_blue(:some)]}></div>
-          Some of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_blue(:much)]}></div>
-          Much of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_blue(:most)]}></div>
-          Most or all of the day
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <h3 class="font-semibold">Meetings</h3>
-      <ul class="mt-1">
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_pink(:none)]}></div>
-          None of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_pink(:one)]}></div>
-          A little of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_pink(:two)]}></div>
-          Some of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_pink(:few)]}></div>
-          Much of the day
-        </li>
-        <li class="flex items-center gap-2 text-sm">
-          <div class={["h-2 w-2", heatmap_pink(:many)]}></div>
-          Most or all of the day
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<h2 class="mt-6 text-xl font-semibold">What time of the day are you most productive?</h2>
-
-<div class="mt-2 overflow-y-auto px-4 sm:overflow-visible bg-slate-50">
-  <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-7 text-zinc-700">
-      <tr class="flex flex-col pr-2 gap-1">
-        <th class="h-8 font-normal text-right">&nbsp;</th>
-        <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>
-        <th class="h-8 font-normal text-right">Mid-day (11:00-13:00)</th>
-        <th class="h-8 font-normal text-right">Early afternoon (13:00-15:00)</th>
-        <th class="h-8 font-normal text-right">Late afternoon (15:00-17:00)</th>
-        <th class="h-8 font-normal text-right">Outside of typical work hours</th>
-        <th class="h-8 font-normal text-right">Equally throughout the day</th>
-      </tr>
-    </thead>
-    <tbody id="reflections-chart-2" phx-update="stream" class="flex gap-1">
-      <tr
-        :for={{row_id, %{most_productive_time: time} = row} <- @streams.reflections}
-        id={"#{row_id}-chart-2"}
-        class="flex flex-col gap-1"
-      >
-        <td class="h-8 text-center uppercase font-mono tracking-wide">
-          <%= Timex.format!(row.date, "{WDshort}") %>
-        </td>
-        <td class={["h-8 w-16", heatmap_most(time == :morning)]}></td>
-        <td class={["h-8 w-16", heatmap_most(time == :midday)]}></td>
-        <td class={["h-8 w-16", heatmap_most(time == :earlyafternoon)]}></td>
-        <td class={["h-8 w-16", heatmap_most(time == :lateafternoon)]}></td>
-        <td class={["h-8 w-16", heatmap_most(time == :nonwork)]}></td>
-        <td class={["h-8 w-16", heatmap_most(time == :equally)]}></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<h2 class="mt-6 text-xl font-semibold">What time of the day are you least productive?</h2>
-
-<div class="mt-2 overflow-y-auto px-4 sm:overflow-visible bg-slate-50">
-  <table class="py-4 w-[40rem] sm:w-full flex">
-    <thead class="flex text-left text-[0.8125rem] leading-6 text-zinc-700">
-      <tr class="flex flex-col pr-2 gap-1">
-        <th class="h-8 font-normal text-right">&nbsp;</th>
-        <th class="h-8 font-normal text-right">In the morning (9:00-11:00)</th>
-        <th class="h-8 font-normal text-right">Mid-day (11:00-13:00)</th>
-        <th class="h-8 font-normal text-right">Early afternoon (13:00-15:00)</th>
-        <th class="h-8 font-normal text-right">Late afternoon (15:00-17:00)</th>
-        <th class="h-8 font-normal text-right">Outside of typical work hours</th>
-        <th class="h-8 font-normal text-right">Equally throughout the day</th>
-      </tr>
-    </thead>
-    <tbody id="reflections-graph-3" phx-update="stream" class="flex gap-1">
-      <tr
-        :for={{row_id, %{least_productive_time: time} = row} <- @streams.reflections}
-        id={"#{row_id}-graph-3"}
-        class="flex flex-col gap-1"
-      >
-        <td class="h-8 text-center uppercase font-mono tracking-wide">
-          <%= Timex.format!(row.date, "{WDshort}") %>
-        </td>
-        <td class={["h-8 w-16", heatmap_least(time == :morning)]}></td>
-        <td class={["h-8 w-16", heatmap_least(time == :midday)]}></td>
-        <td class={["h-8 w-16", heatmap_least(time == :earlyafternoon)]}></td>
-        <td class={["h-8 w-16", heatmap_least(time == :lateafternoon)]}></td>
-        <td class={["h-8 w-16", heatmap_least(time == :nonwork)]}></td>
-        <td class={["h-8 w-16", heatmap_least(time == :equally)]}></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 
 <.table
+  :if={not Enum.empty?(@reflections)}
   id="reflections"
-  rows={@streams.reflections}
-  row_click={fn {_id, reflection} -> JS.navigate(~p"/r/#{reflection}/edit") end}
+  rows={@reflections}
+  row_click={fn reflection -> JS.navigate(~p"/r/#{reflection}/edit") end}
 >
-  <:col :let={{_id, reflection}} label="Date"><%= reflection.date %></:col>
-  <:action :let={{_id, reflection}}>
+  <:col :let={reflection} label="Date"><%= reflection.date %></:col>
+  <:action :let={reflection}>
     <.link patch={~p"/r/#{reflection}/edit"}>Edit</.link>
   </:action>
-  <:action :let={{id, reflection}}>
+  <:action :let={reflection}>
     <.link
-      phx-click={JS.push("delete", value: %{id: reflection.id}) |> hide("##{id}")}
+      phx-click={JS.push("delete", value: %{id: reflection.id}) |> JS.navigate(~p"/")}
       data-confirm="Are you sure?"
     >
       Delete
     </.link>
   </:action>
 </.table>
+
+<.chart reflections={@reflections} />
 
 <.modal
   :if={@live_action in [:new, :edit]}

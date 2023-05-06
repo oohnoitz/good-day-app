@@ -219,10 +219,8 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
     current_user_id = socket.assigns.current_user_id
 
     with %{user_id: ^current_user_id} <- socket.assigns.reflection,
-         {:ok, reflection} <-
+         {:ok, _reflection} <-
            Accounts.update_reflection(socket.assigns.reflection, reflection_params) do
-      notify_parent({:saved, reflection})
-
       {:noreply,
        socket
        |> put_flash(:info, "Reflection updated successfully")
@@ -241,9 +239,7 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
 
   defp save_reflection(socket, :new, reflection_params) do
     case Accounts.create_reflection(reflection_params) do
-      {:ok, reflection} ->
-        notify_parent({:saved, reflection})
-
+      {:ok, _reflection} ->
         {:noreply,
          socket
          |> put_flash(:info, "Reflection created successfully")
@@ -257,6 +253,4 @@ defmodule GoodDayWeb.ReflectionLive.FormComponent do
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end
